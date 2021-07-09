@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="container-fluid">
+        <form action="" class="row">
+
+            <label for="">Nombre</label>
+            <input type="text" id="nombre" placeholder="nombre">
+            <br>
+            <label for="">Apellido</label>
+            <input type="text" id="apellido" placeholder="apellido">
+            <br>
+            <label for="">Email</label>
+            <input type="text" id="email" placeholder="email">
+
+            <button id="btnG">Guardar</button>
+        </form>
+    </div>
+
+    <div id="aca">
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+    <script>
+        //SCRIPT DE AYUDA AL CLIENTE
+        class Cliente {
+            constructor(n, a, e) {
+                this.n = n;
+                this.a = a;
+                this.e = e
+            }
+        }
+
+
+        let textoAyuda = document.createElement("p")
+        textoAyuda.setAttribute("class", "text-danger")
+        textoAyuda.setAttribute("id", "des1")
+        textoAyuda.setAttribute("style", "display: none;")
+        textoAyuda.textContent = "INGRESA TU NOMBRE Y TU SEGUNDO NOMBRE EN ESTE CAMPO"
+
+        let selector = document.getElementsByTagName("label")
+        selector[0].appendChild(textoAyuda)
+
+
+        let btnG = document.getElementById("btnG")
+
+        let des1 = document.getElementById("des1")
+
+        let nombre = document.getElementById("nombre")
+
+        ////////////////////////////////////////////////
+
+        function mostrar(e) {
+
+            e.preventDefault()
+
+            let nombre = document.getElementById("nombre").value
+            let apellido = document.getElementById("apellido").value
+            let email = document.getElementById("email").value
+
+
+            guardarDatos(nombre, apellido, email)
+            usuarioCorrecto()
+            alert(`Muchas gracias ${nombre} ${apellido} te registrate con el mail ${email}`);
+        }
+
+        function aparecer() {
+            des1.style.display = "block";
+        }
+
+        function desaparecer() {
+            des1.style.display = "none";
+        }
+
+        function guardarDatos(nombre, apellido, email) {
+            const cliente = new Cliente(nombre, apellido, email)
+            localStorage.setItem("cliente", JSON.stringify(cliente))
+        }
+
+        ////////////////////////////////////////////////////////
+
+        btnG.addEventListener("click", mostrar)
+        nombre.addEventListener("click", aparecer)
+        nombre.addEventListener("focusout", desaparecer)
+
+
+        /////////////////////////////LOGICA
+
+        let dato = JSON.parse(localStorage.getItem("cliente"))
+
+        function usuarioCorrecto() {
+            if (dato.n == "arturo" && dato.a == "juan" && dato.e == "123") {
+
+                let aca = document.getElementById("aca")
+                aca.innerHTML = `
+                                <p>SOS EL USUARIO CORRECTO</p>
+                                `
+            }
+        }
+    </script>
+
+</body>
+
+</html>
